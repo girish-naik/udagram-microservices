@@ -5,16 +5,16 @@ metadata:
     service: reverseproxy
   name: reverseproxy
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
         service: reverseproxy
     spec:
       containers:
-      - image: mr-obiwankenobi/reverseproxy
+      - image: girishnaik/reverseproxy
         name: reverseproxy
-        imagePullPolicy: Always          
+        imagePullPolicy: IfNotPresent          
         resources:
           requests:
             memory: "64Mi"
