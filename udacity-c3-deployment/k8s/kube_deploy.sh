@@ -11,19 +11,19 @@ sed -i "s/___INSERT_POSTGRESS_DB___/${POSTGRESS_DB}/g" env-configmap.yaml
 sed -i "s/___INSERT_POSTGRESS_HOST___/${POSTGRESS_HOST}/g" env-configmap.yaml
 
 echo "Deploying secrets"
-#kubectl apply -f env-secret.yaml
-#kubectl apply -f aws-secret.yaml
+kubectl apply -f env-secret.yaml
+kubectl apply -f aws-secret.yaml
 echo "Deploying env"
-#kubectl apply -f env-configmap.yaml
+kubectl apply -f env-configmap.yaml
 echo "Deploying feed"
-#kubectl apply -f backend-feed-deployment.yaml
-#kubectl apply -f backend-feed-service.yaml
+kubectl apply -f backend-feed-deployment.yaml
+kubectl apply -f backend-feed-service.yaml
 echo "Deploying user"
-#kubectl apply -f backend-user-deployment.yaml
-#kubectl apply -f backend-user-service.yaml
+kubectl apply -f backend-user-deployment.yaml
+kubectl apply -f backend-user-service.yaml
 echo "Deploying reverseproxy"
-#kubectl apply -f reverseproxy-deployment.yaml
-#kubectl apply -f reverseproxy-service.yaml
+kubectl apply -f reverseproxy-deployment.yaml
+kubectl apply -f reverseproxy-service.yaml
 echo "Deploying frontend"
-#kubectl apply -f frontend-deployment.yaml
-#kubectl apply -f frontend-service.yaml
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f frontend-service.yaml
