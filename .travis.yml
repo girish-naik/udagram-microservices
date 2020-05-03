@@ -15,14 +15,14 @@ before_install:
   - chmod +x ./kubectl
   - sudo mv ./kubectl /usr/local/bin/kubectl
 
-# install:
-#   - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build --parallel
-#   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-#   - docker images
-#   - docker push "$DOCKER_USERNAME"/udacity-restapi-feed:latest
-#   - docker push "$DOCKER_USERNAME"/udacity-restapi-user:latest
-#   - docker push "$DOCKER_USERNAME"/udacity-frontend:local
-#   - docker push "$DOCKER_USERNAME"/reverseproxy:latest
+install:
+  - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build --parallel
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker images
+  - docker push "$DOCKER_USERNAME"/udacity-restapi-feed:latest
+  - docker push "$DOCKER_USERNAME"/udacity-restapi-user:latest
+  - docker push "$DOCKER_USERNAME"/udacity-frontend:local
+  - docker push "$DOCKER_USERNAME"/reverseproxy:latest
 
 script:
   - mkdir ${HOME}/.kube
