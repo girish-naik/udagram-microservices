@@ -18,7 +18,17 @@ before_install:
 install:
   - docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build --parallel
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push $DOCKER_USERNAME/backend-feed
-  - docker push $DOCKER_USERNAME/backend-user
-  - docker push $DOCKER_USERNAME/frontend
-  - docker push $DOCKER_USERNAME/reverseproxy
+  - docker images
+  - docker push $DOCKER_USERNAME/backend-feed:latest
+  - docker push $DOCKER_USERNAME/backend-user:latest
+  - docker push $DOCKER_USERNAME/frontend:local
+  - docker push $DOCKER_USERNAME/reverseproxy:latest
+  - mkdir ${HOME}/.kube
+  - echo "$KUBE_CONFIG" | base64 --decode > ${HOME}/.kube/config
+
+script:
+  - kubectl get pods
+
+deploy:
+  - cd udacity-c3-deployment/k8s
+  - /bin/sh kube_deploy.sh
