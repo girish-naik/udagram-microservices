@@ -1,6 +1,6 @@
 #!/bin/sh
 echo "Setting up files"
-sed -i 's/___INSERT_AWS_CREDENTIALS_FILE__BASE64____/$AWS_CREDS/g' aws_secret.yaml
+sed -i 's/___INSERT_AWS_CREDENTIALS_FILE__BASE64____/$AWS_CREDS/g' aws-secret.yaml
 sed -i 's/___INSERT_POSTGRESS_USERNAME__BASE64___/$POSTGRESS_USERNAME/g' env-secret.yaml
 sed -i 's/___INSERT_POSTGRESS_PASSWORD__BASE64___/$POSTGRESS_PASSWORD/g' env-secret.yaml
 sed -i 's/___INSERT_AWS_BUCKET___/$AWS_BUCKET/g' env-configmap.yaml
