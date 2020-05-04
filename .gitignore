@@ -1,2 +1,4 @@
 .DS_Store
-kubeone/
+tf.json
+terraform.tfstate
+terraform.tfstate.backup
