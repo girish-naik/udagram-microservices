@@ -51,3 +51,117 @@ Ionic CLI can build the frontend into static HTML/CSS/JavaScript files. These fi
 ionic build
 ```
 ***
+
+### Running project locally as docker containers
+
+Steps 1 - 3 are one time only steps. 
+
+1. Set the appropriate values for the below environment variables: 
+```
+export POSTGRESS_USERNAME=<postgress database username>
+export POSTGRESS_PASSWORD=<postgress database password>
+export POSTGRESS_DB=<postgress dababase name>
+export POSTGRESS_HOST=<postgress database instance hostname>
+export AWS_REGION=<aws region where bucket and database are located>
+export AWS_PROFILE=<aws profile for credentials>
+export AWS_BUCKET=<aws bucket name for storing images>
+export JWT_SECRET=<secret string for encoding passwords>
+```
+
+2. Install docker desktop: https://docs.docker.com/get-docker/
+
+3. Install docker-compose: https://docs.docker.com/compose/install/
+
+4. Build Images - 
+```docker-compose -f udacity-c3-deployment/docker/docker-compose-build.yaml build --parallel```
+
+5. Verify Images - 
+```docker images```
+
+6. Push images -
+
+This step is optional for running the app as docker container. 
+```
+docker push <dockerhubusername>/udacity-restapi-feed:latest
+docker push <dockerhubusername>/udacity-restapi-user:latest
+docker push <dockerhubusername>/udacity-frontend:local
+docker push <dockerhubusername>/reverseproxy:latest
+```
+
+If you don't want to do this step. Change the line that says ```imagePullPolicy: Always``` to ```imagePullPolicy: Never``` in all *-deployment.yaml files in udacity-c3-deployment/k8s/. This is required to run the app on a local kubernetes cluster. 
+
+7. Run app - 
+```docker up```
+
+8. Verify application : 
+
+Open localhost:8100 in browser.
+
+9. Stop app - 
+```docker down```
+
+***
+
+### Running app as a deployement on local kubernetes
+If you have already followed steps for deploying as docker container then you can follow steps below. If not, then follow steps 1-6 from the previous section and then continue from here.
+
+1. Enable kubernetes on docker desktop.
+
+Docker desktop app > Preferences(Settings on windows) > Kubernetes > Check "Enable Kubernetes"
+
+This will take a few minutes to setup and download the cli.
+
+Verify running the below command on terminal
+
+```kubectl cluster-info```
+
+2. Setup additional environment variables.
+```
+export AWS_CREDENTIALS=<base64 encoded AWS credentials file>
+export POSTGRESS_USERNAME=<base64 encoded POSTGRESS username>
+export POSTGRESS_PASSWORD=<base64 encoded POSTGRESS password>
+```
+
+3. Preparing files and deploying : 
+```
+chmod 755 udacity-c3-deployment/k8s/kube_deploy.sh
+./udacity-c3-deployment/k8s/kube_deploy.sh
+```
+The kube_deploy.sh script will prepare secrets, load deployments and services to local kube cluster.
+
+4. Verify : 
+
+```
+kubectl get all
+```
+This should show 
+- deployments for backend-user, backend-feeds, reverseproxy, frontend. 
+- pods for backend-user, backend-feeds, reverseproxy, frontend.
+- services for backend-user, backend-feeds, reverseproxy, frontend.
+
+5. Setup port forwarding :
+
+```
+kubectl port-forward services/reverseproxy 8080:8080 &
+kubectl port-forward services/frontend 8100:8100 &
+```
+
+6. Verify application : 
+
+Open localhost:8100 in browser.
+
+***
+
+### Deploying and running on AWS kubernetes cluster.
+
+1. Setup AWS infrastructure and install kubernetes cluster.
+
+Follow instructions on https://github.com/kubermatic/kubeone/blob/master/docs/quickstart-aws.md
+
+The kubeone/terraform config that I used is available under udacity-c3-deployment/kuneone. Feel free to setup your own configuration.
+
+2. Deploying
+
+Deploying is done in the same way as for local kubernetes cluster. If you have setup the KUBECONFIG env variable as instructed in the link above. Just follow steps 2-6 of previous section to deploy on AWS.
+
+
