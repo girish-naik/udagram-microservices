@@ -91,14 +91,14 @@ docker push <dockerhubusername>/reverseproxy:latest
 If you don't want to do this step. Change the line that says ```imagePullPolicy: Always``` to ```imagePullPolicy: Never``` in all *-deployment.yaml files in udacity-c3-deployment/k8s/. This is required to run the app on a local kubernetes cluster. 
 
 7. Run app - 
-```docker-compose up```
+```cd udacity-c3-deployment/docker/ && docker-compose up```
 
 8. Verify application : 
 
 Open localhost:8100 in browser.
 
 9. Stop app - 
-```docker-compose down```
+```cd udacity-c3-deployment/docker/ && docker-compose down```
 
 ***
 
