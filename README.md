@@ -164,4 +164,38 @@ The kubeone/terraform config that I used is available under udacity-c3-deploymen
 
 Deploying is done in the same way as for local kubernetes cluster. If you have setup the KUBECONFIG env variable as instructed in the link above. Just follow steps 2-6 of previous section to deploy on AWS.
 
+***
+
+### Using Travis CI to deploy on AWS infrastructure.
+
+The repo has travis ci build instructions in .travisci.yaml. Follow below steps to create a build plan.
+
+1. Integrate GIT with Travis CI - https://travis-ci.org/
+2. On Travis CI setup the following env variables for the repo/branch.
+```
+DOCKER_USERNAME=<dockerhub username>
+DOCKER_PASSWORD=<dockerhub password>
+KUBE_CONFIG=<base64 encoded kubeconfig file that was generated for the aws infra>
+AWS_CREDENTIALS=<base64 encoded AWS IAM credentials with adequate policy>
+POSTGRESS_USERNAME=<base64 encoded postgress db username>
+POSTGRESS_PASSWORD=<base64 encoded postgress db password>
+AWS_BUCKET=<aws bucket name for storing app images>
+AWS_PROFILE=<aws profile>
+AWS_REGION=<aws region>
+JWT_SECRET=<secret string for encrypting app passwords>
+POSTGRESS_DB=<postgress db name>
+POSTGRESS_HOST=<postgress db instance hostname>
+```
+3. Trigger a build from the Travis CI dashboard.
+
+***
+
+### Public Images for the project - 
+
+https://hub.docker.com/repository/docker/girishnaik/reverseproxy
+https://hub.docker.com/repository/docker/girishnaik/udacity-frontend
+https://hub.docker.com/repository/docker/girishnaik/udacity-restapi-user
+https://hub.docker.com/repository/docker/girishnaik/udacity-restapi-feed
+
+***
 
