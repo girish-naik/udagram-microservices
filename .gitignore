@@ -2,3 +2,4 @@
 tf.json
 terraform.tfstate
 terraform.tfstate.backup
+package-lock.json
